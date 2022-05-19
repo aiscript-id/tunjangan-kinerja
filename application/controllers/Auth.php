@@ -246,6 +246,8 @@ class Auth extends MY_Controller
 
                 // if query return 2
                 //jika bernilai TRUE maka alihkan halaman sesuai dengan level nya
+                $this->session->set_flashdata('success', 'Anda Berhasil Login');
+
                 if ($data->id_role == '1') {
                     redirect('admin/home');
                 } elseif ($data->id_role == '2') {
