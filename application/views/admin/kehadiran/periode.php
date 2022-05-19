@@ -141,7 +141,7 @@ $(function() {
 									<?php endif ?>
 								</td>
 								<td>
-									<?php if($this->session->userdata('id_role' == 1)): ?>
+									<?php if($this->session->userdata('id_role') == 1): ?>
 									<button type="button" class="btn btn-warning btn-sm" data-toggle="modal" data-target="#modal-edit-periode<?= $per->id; ?>">
 										<i class="fa fa-edit"></i> Edit
 									</button>
