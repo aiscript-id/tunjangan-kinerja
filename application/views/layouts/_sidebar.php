@@ -10,10 +10,16 @@
         <!-- Sidebar user (optional) -->
         <div class="user-panel mt-3 pb-3 mb-3 d-flex">
             <div class="image">
-            <img src="<?php echo base_url('assets/uploads/images/foto_profil/' . $userdata->photo); ?>  " class="img-circle elevation-2" alt="User Image">
+            <img src="<?php 
+            if (@$userdata->photo) {
+                echo base_url('assets/uploads/images/foto_profil/' . $userdata->photo); 
+            } else {
+                echo base_url('assets/uploads/images/no_image.png');
+            }
+                ?>  " class="img-circle elevation-2" alt="User Image">
             </div>
             <div class="info">
-            <a href="#" class="d-block"><?= $userdata->name ?></a>
+            <a href="#" class="d-block"><?= $userdata->first_name ?></a>
             </div>
         </div>
 
@@ -83,6 +89,12 @@
                 </a>
             </li>
             <li class="nav-item">
+                <a href="<?= base_url('admin/potongan') ?>" class="nav-link  <?php if($c_judul == "Potongan") {echo 'active';} ?>">
+                    <i class="nav-icon fas fa-calendar-minus"></i>
+                    <p>Potongan</p>
+                </a>
+            </li>
+            <li class="nav-item">
                 <a href="<?= base_url('admin/kehadiran') ?>" class="nav-link  <?php if($c_judul == "Kehadiran") {echo 'active';} ?>">
                     <i class="nav-icon far fa-calendar-check"></i>
                     <p>Kehadiran</p>
@@ -94,6 +106,8 @@
                     <p>Tunjangan</p>
                 </a>
             </li>
+
+
             </ul>
         </nav>
         <!-- /.sidebar-menu -->

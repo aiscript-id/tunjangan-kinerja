@@ -24,7 +24,17 @@
 		<!-- header -->
 		<?php require_once('_nav.php') ;?>
 		<!-- sidebar -->
-		<?php require_once('_sidebar.php') ;?>
+		<?php
+		if ($this->session->userdata('id_role') == '1') {
+			require_once('_sidebar.php') ;
+		} elseif ($this->session->userdata('id_role') == '2') {
+			require_once('_sidebar_petugas.php') ;
+		} elseif ($this->session->userdata('id_role') == '3') {
+			require_once('_sidebar_petugas.php') ;
+		} elseif ($this->session->userdata('id_role') == '4') {
+			require_once('_sidebar_pegawai.php') ;
+		}
+		?>
 		<!-- content -->
 		<div class="content-wrapper px-2">
 			<!-- Main content -->

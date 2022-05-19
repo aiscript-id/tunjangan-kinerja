@@ -13,11 +13,12 @@
 			</div>
 			<div class="card-body">
 				<div class="table-responsive">
-					<table id="example1" class="table table-bordered table-striped">
+					<table id="datatable" class="table table-bordered table-striped">
 						<thead>
 							<tr>
 								<th>No</th>
 								<th>Nama</th>
+								<th>Role</th>
 								<th>NIP</th>
 								<th>Jabatan</th>
 								<th>Aksi</th>
@@ -29,11 +30,12 @@
 								<tr>
 									<td><?= $no; ?></td>
 									<td><?= $pegawai->first_name; ?> <?= $pegawai->last_name; ?></td>
+									<td><?= $pegawai->name ?></td>
 									<td><?= $pegawai->username; ?></td>
 									<td><?= $pegawai->jabatan; ?></td>
 									<td>
-										<a href="<?= base_url('admin/pegawai/edit/'.$pegawai->id); ?>" class="btn btn-warning btn-xs"><i class="fa fa-edit"></i> Edit</a>
-										<a href="<?= site_url('admin/pegawai/delete/'.$pegawai->id); ?>" class="btn btn-danger btn-xs" onclick="return confirm('Yakin ingin menghapus data ini?');"><i class="fa fa-trash"></i> Hapus</a>
+										<a href="<?= base_url('admin/pegawai/edit/'.$pegawai->id); ?>" class="btn btn-warning btn-sm"><i class="fa fa-edit"></i> Edit</a>
+										<a href="<?= site_url('admin/pegawai/delete/'.$pegawai->id); ?>" class="btn btn-danger btn-sm" onclick="return confirm('Yakin ingin menghapus data ini?');"><i class="fa fa-trash"></i> Hapus</a>
 										<!-- delete with param id -->
 
 

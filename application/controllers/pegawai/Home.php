@@ -24,14 +24,32 @@ class Home extends MY_Controller
     {
         parent::__construct();
         $this->check_login();
-        if ($this->session->userdata('id_role') != "2") {
+        if ($this->session->userdata('id_role') != "4") {
             redirect('', 'refresh');
         }
+    }
+
+    // user
+    public function user()
+    {
+        $data = $this->db->select('tbl_user.*, jabatan, kelas, tunjangan, jabatan.id as id_jabatan, , tbl_role.id as id_role')
+        ->where('tbl_user.id', $this->session->userdata('id'))
+        ->join('tbl_role', 'tbl_user.id_role = tbl_role.id')
+        ->join('jabatan', 'tbl_user.jabatan_id = jabatan.id')
+        ->get('tbl_user')
+        ->row();
+        return $data;
     }
 
     public function index()
     {
 		$data = konfigurasi('Dashboard');
-        $this->template->load('layouts/template', 'member/dashboard', $data);
+        $user = $this->user();
+        $data['user'] = $user;
+        $data['tunjangan'] = $this->db->select('tunjangan.*,  periode_tunjangan.id as periode_id, verifikasi, awal, akhir, periode_tunjangan.periode as name_periode')
+        ->where('user_id', $user->id )
+        ->join('periode_tunjangan', 'periode_tunjangan.tanggal = tunjangan.periode')
+        ->get('tunjangan')->last_row();
+        $this->template->load('layouts/template', 'pegawai/dashboard', $data);
     }
 }

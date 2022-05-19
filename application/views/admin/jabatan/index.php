@@ -26,9 +26,9 @@
 									<form action="<?= base_url('admin/jabatan/store'); ?>" method="post">
 													
 										<div class="form-group">
-											<label for="kelas">Kelas</label>
+											<label for="kelas">Kelas / Golongan</label>
 											<select name="kelas" id="kelas" class="form-control">
-												<option value="">Pilih Kelas</option>
+												<option value="">Pilih Kelas / Golongan</option>
 												<?php foreach ($kelas as $kls) : ?>
 													<option value="<?= $kls; ?>"><?= $kls; ?></option>
 												<?php endforeach; ?>
@@ -62,7 +62,7 @@
 						<thead>
 							<tr>
 								<th>No</th>
-								<th>Kelas</th>
+								<th>Kelas / Golongan</th>
 								<th>Jabatan</th>
 								<th>Tunjangan</th>
 								<th>Aksi</th>
@@ -96,7 +96,7 @@
 															<input type="hidden" name="id" value="<?= $jabatan->id; ?>">
 
 															<div class="form-group">
-																<label for="kelas">Kelas</label>
+																<label for="kelas">Kelas / Golongan</label>
 																<select name="kelas" id="kelas" class="form-control">
 																	<option value="">Pilih Kelas</option>
 																	<?php foreach ($kelas as $kls) : ?>
@@ -125,7 +125,7 @@
 										</div>
 										<!-- end modal -->
 										
-										<a href="<?= site_url('admin/jabatan/delete/'.$jabatan->id); ?>" class="btn btn-danger btn-xs" onclick="return confirm('Yakin ingin menghapus data ini?');"><i class="fa fa-trash"></i> Hapus</a>
+										<a href="<?= site_url('admin/jabatan/delete/'.$jabatan->id); ?>" class="btn btn-danger btn-sm" onclick="return confirm('Yakin ingin menghapus data ini?');"><i class="fa fa-trash"></i> Hapus</a>
 										<!-- delete with param id -->
 
 

@@ -15,7 +15,7 @@
 		<hr>
 		<?php if (@$pegawai):?>
 			<form action="<?= base_url('admin/pegawai/update') ?>" method="post">
-			<input type="hidden" value="<?= $pegawai->id ?>">
+			<input type="hidden" name="id" value="<?= $pegawai->id ?>">
 		<?php else: ?>
 			<form action="<?= base_url('admin/pegawai/create') ?>" method="post">
 		<?php endif; ?>
@@ -60,7 +60,7 @@
 					<select name="id_role" id="role" class="form-control">
 						<option value="">Pilih Role</option>
 						<?php foreach ($role as $r) : ?>
-						<option <?php if($pegawai->id_role == $r->id) {echo 'selected';} ?> value="<?= $r->id ?>"><?= $r->name ?></option>
+						<option <?php if(@$pegawai->id_role == $r->id) {echo 'selected';} ?> value="<?= $r->id ?>"><?= $r->name ?></option>
 						<?php endforeach; ?>
 					</select>
 					<?= form_error('role', '<small class="text-danger">', '</small>') ?>
@@ -87,8 +87,8 @@
 					<!-- select status -->
 					<select name="status_kepegawaian" id="status_kepegawaian" class="form-control" required>
 						<option value="">Pilih Status Kepegawaian</option>
-						<option  <?php if($pegawai->status_kepegawaian == 1) {echo 'selected';} ?> value="1">PNS</option>
-						<option  <?php if($pegawai->status_kepegawaian == 2) {echo 'selected';} ?> value="2">Non-PNS</option>
+						<option  <?php if(@$pegawai->status_kepegawaian == 1) {echo 'selected';} ?> value="1">PNS</option>
+						<option  <?php if(@$pegawai->status_kepegawaian == 2) {echo 'selected';} ?> value="2">Non-PNS</option>
 					</select>
 					<?= form_error('status_kepegawaian', '<small class="text-danger">', '</small>') ?>
 				</div>
@@ -100,7 +100,7 @@
 					<select name="jabatan_id" id="jabatan_id" class="form-control" required>
 						<option value="">Pilih Jabatan</option>
 						<?php foreach ($jabatan as $j) : ?>
-							<option <?php if($pegawai->jabatan_id == $j->id) {echo 'selected';} ?> value="<?= $j->id ?>"><?= $j->jabatan ?></option>
+							<option <?php if(@$pegawai->jabatan_id == $j->id) {echo 'selected';} ?> value="<?= $j->id ?>"><?= $j->jabatan ?></option>
 						<?php endforeach; ?>
 					</select>
 					<?= form_error('status_kepegawaian', '<small class="text-danger">', '</small>') ?>
@@ -156,8 +156,8 @@
 					<label for="jk">Jenis Kelamin</label>
 					<select name="jk" id="jk" class="form-control" required>
 						<option value="">Pilih Jenis Kelamin</option>
-						<option <?php if($pegawai->jk == 'L') {echo 'selected';} ?> value="L">Laki-Laki</option>
-						<option <?php if($pegawai->jk == 'P') {echo 'selected';} ?> value="P">Perempuan</option>
+						<option <?php if(@$pegawai->jk == 'L') {echo 'selected';} ?> value="L">Laki-Laki</option>
+						<option <?php if(@$pegawai->jk == 'P') {echo 'selected';} ?> value="P">Perempuan</option>
 					</select>
 				</div>
 			</div>

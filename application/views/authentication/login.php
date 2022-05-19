@@ -2,7 +2,7 @@
 	<!-- /.login-logo -->
 	<div class="card">
 		<div class="card-header text-center">
-			<div class="login-logo w-100">
+			<div class="login-logo w-100 my-4">
 				<!-- logo -->
 				<img src="<?php echo base_url("$logo"); ?>" class="logo" width="100px" alt="">
 			</div>

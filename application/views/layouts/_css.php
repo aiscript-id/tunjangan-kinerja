@@ -5,3 +5,6 @@
 <link href="<?php echo base_url('assets');?>/vendor/Ionicons/css/ionicons.min.css" rel="stylesheet">
 <link href="<?php echo base_url('assets');?>/vendor/AdminLTE-3.2.0/dist/css/adminlte.min.css" rel="stylesheet">
 <!-- <link href="<?php echo base_url('assets');?>/vendor/AdminLTE-2.4.3/css/skins/_all-skins.min.css" rel="stylesheet"> -->
+<!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.5/css/bulma.min.css"> -->
+<!-- <link rel="stylesheet" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css"> -->
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.12.0/css/jquery.dataTables.css">

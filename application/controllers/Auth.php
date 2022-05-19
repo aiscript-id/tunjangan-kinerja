@@ -64,14 +64,14 @@ class Auth extends MY_Controller
             $result = $this->Auth_model->update($data, $id);
             if ($result > 0) {
                 $this->updateProfil();
-                $this->session->set_flashdata('msg', show_succ_msg('Data Profil Berhasil diubah'));
+                $this->session->set_flashdata('success', 'Data Profil Berhasil diubah');
                 redirect('auth/profile');
             } else {
-                $this->session->set_flashdata('msg', show_err_msg('Data Profile Gagal diubah'));
+                $this->session->set_flashdata('error', 'Data Profile Gagal diubah');
                 redirect('auth/profile');
             }
         } else {
-            $this->session->set_flashdata('msg', show_err_msg(validation_errors()));
+            $this->session->set_flashdata('error', show_err_msg(validation_errors()));
             redirect('auth/profile');
         }
     }
@@ -93,21 +93,44 @@ class Auth extends MY_Controller
                     $result = $this->Auth_model->update($data, $id);
                     if ($result > 0) {
                         $this->updateProfil();
-                        $this->session->set_flashdata('msg', show_succ_msg('Password Berhasil diubah'));
+                        $this->session->set_flashdata('success', 'Password Berhasil diubah');
                         redirect('auth/profile');
                     } else {
-                        $this->session->set_flashdata('msg', show_err_msg('Password Gagal diubah'));
+                        $this->session->set_flashdata('error', 'Password Gagal diubah');
                         redirect('auth/profile');
                     }
                 }
             } else {
-                $this->session->set_flashdata('msg', show_err_msg('Password Salah'));
+                $this->session->set_flashdata('error', 'Password Salah');
                 redirect('auth/profile');
             }
         } else {
-            $this->session->set_flashdata('msg', show_err_msg(validation_errors()));
+            $this->session->set_flashdata('error', 'Terjadi Kesalahan Input. Mohon pastikan data sudah benar');
             redirect('auth/profile');
         }
+    }
+
+    public function updateDataDiri()
+    {
+        $id = $this->session->userdata('id');
+        $data = array(
+            'agama' => $this->input->post('agama'),
+            'alamat' => $this->input->post('alamat'),
+            'ttl' => $this->input->post('ttl'),
+            'jk' => $this->input->post('jk'),
+            'pendidikan' => $this->input->post('pendidikan'),
+        );
+
+        $result = $this->Auth_model->update($data, $id);
+        if ($result > 0) {
+            $this->updateProfil();
+            $this->session->set_flashdata('success', 'Data Diri Berhasil diubah');
+            redirect('auth/profile');
+        } else {
+            $this->session->set_flashdata('error', 'Data Diri Gagal diubah');
+            redirect('auth/profile');
+        }
+        
     }
 
     private function _do_upload()
@@ -167,38 +190,13 @@ class Auth extends MY_Controller
         $query = $this->Auth_model->check_account($email, $password);
 
         if ($query === 1) {
-            $this->session->set_flashdata('alert', '<p class="box-msg">
-        			<div class="info-box alert-danger">
-        			<div class="info-box-icon">
-        			<i class="fa fa-warning"></i>
-        			</div>
-        			<div class="info-box-content" style="font-size:14">
-        			<b style="font-size: 20px">GAGAL</b><br>Email yang Anda masukkan tidak terdaftar.</div>
-        			</div>
-        			</p>
-            ');
+            $this->session->set_flashdata('error', 'Akun tidak ditemukan. Silahkan Coba Lagi');
         } elseif ($query === 2) {
-            $this->session->set_flashdata('alert','<p class="box-msg">
-              <div class="info-box alert-info">
-              <div class="info-box-icon">
-              <i class="fa fa-info-circle"></i>
-              </div>
-              <div class="info-box-content" style="font-size:14">
-              <b style="font-size: 20px">GAGAL</b><br>Akun yang Anda masukkan tidak aktif, silakan hubungi Administrator.</div>
-              </div>
-              </p>'
-            );
+            $this->session->set_flashdata('error', 'Akun tidak aktif, silakan hubungi Administrator.');
+
         } elseif ($query === 3) {
-            $this->session->set_flashdata('alert', '<p class="box-msg">
-        			<div class="info-box alert-danger">
-        			<div class="info-box-icon">
-        			<i class="fa fa-warning"></i>
-        			</div>
-        			<div class="info-box-content" style="font-size:14">
-        			<b style="font-size: 20px">GAGAL</b><br>Password yang Anda masukkan salah.</div>
-        			</div>
-        			</p>
-              ');
+            $this->session->set_flashdata('error', 'Password Salah. Silahkan Coba Lagi.');
+
         } else {
             //membuat session dengan nama userData yang artinya nanti data ini bisa di ambil sesuai dengan data yang login
             $userdata = array(
@@ -230,6 +228,12 @@ class Auth extends MY_Controller
         if ($this->session->userdata('id_role') == "2") {
             redirect('member/home');
         }
+        if ($this->session->userdata('id_role') == "3") {
+            redirect('petugas/home');
+        }
+        if ($this->session->userdata('id_role') == "4") {
+            redirect('pegawai/home');
+        }
 
         //proses login dan validasi nya
         if ($this->input->post('submit')) {
@@ -240,11 +244,16 @@ class Auth extends MY_Controller
             if ($this->form_validation->run() && $error === true) {
                 $data = $this->Auth_model->check_account($this->input->post('email'), $this->input->post('password'));
 
+                // if query return 2
                 //jika bernilai TRUE maka alihkan halaman sesuai dengan level nya
                 if ($data->id_role == '1') {
                     redirect('admin/home');
                 } elseif ($data->id_role == '2') {
                     redirect('member/home');
+                } elseif ($data->id_role == '3') {
+                    redirect('petugas/home');
+                } elseif ($data->id_role == '4') {
+                    redirect('pegawai/home');
                 }
             } else {
                 $this->template->load('authentication/layouts/template', 'authentication/login', $data);
@@ -264,16 +273,7 @@ class Auth extends MY_Controller
 			if ($key!='__ci_last_regenerate' && $key != '__ci_vars')
 			$this->session->unset_userdata($key);
 		}
-        $this->session->set_flashdata('alert', '<p class="box-msg">
-              <div class="info-box alert-success">
-              <div class="info-box-icon">
-              <i class="fa fa-check-circle"></i>
-              </div>
-              <div class="info-box-content" style="font-size:14">
-              <b style="font-size: 20px">SUKSES</b><br>Log Out Berhasil</div>
-              </div>
-              </p>
-			');
+        $this->session->set_flashdata('success', 'Anda Telah Logout');
         redirect('auth/login');
     }
 }

@@ -58,7 +58,15 @@
 				<a href="#" class="dropdown-item">
 					<!-- Message Start -->
 					<div class="media">
-					<img src="<?php echo base_url('assets/uploads/images/foto_profil/' . $userdata->photo); ?>" alt="User Avatar" class="img-size-50 img-circle mr-3">
+					<img src="
+					<?php 
+					if (@$userdata->photo) {
+						echo base_url('assets/uploads/images/foto_profil/' . $userdata->photo); 
+					} else {
+						echo base_url('assets/uploads/images/no_image.png');
+					}
+						?> 
+					" alt="User Avatar" class="img-size-50 img-circle mr-3">
 					<div class="media-body">
 						<h3 class="dropdown-item-title">
 						<?= $userdata->name ?>
