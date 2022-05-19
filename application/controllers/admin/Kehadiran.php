@@ -16,7 +16,7 @@ class Kehadiran extends MY_Controller
     public function index()
     {
         $data = konfigurasi('Kehadiran');
-        $data['periode'] = $this->db->order_by('id', 'asc')->get('periode_tunjangan')->result();
+        $data['periode'] = $this->db->order_by('id', 'desc')->get('periode_tunjangan')->result();
         $this->template->load('layouts/template', 'admin/kehadiran/periode', $data);
         // $this->template->load('layouts/new','admin/dashboard', $data);
     }
