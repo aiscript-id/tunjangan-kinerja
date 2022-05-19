@@ -200,7 +200,7 @@
 					</thead>
 					<tbody>
 						<?php $no = 1; 
-						if(@$kehadiran) :
+						if(@$kehadirans) :
 						?>
 						
 						<?php foreach ($kehadirans as $kehadiran) : ?>
