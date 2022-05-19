@@ -15,7 +15,7 @@ $(function() {
 			<div class="card-header with-border">
 				<h3 class="card-title">Data Periode Kehadiran</h3>
 				<!-- button add -->
-				<?php if($this->session->userdata('id_role' == 1)): ?>
+				<?php if($this->session->userdata('id_role') == 1): ?>
 				<div class="pull-right">
 					<!-- button modal add jabatan -->
 					<button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#modal-add-periode">
