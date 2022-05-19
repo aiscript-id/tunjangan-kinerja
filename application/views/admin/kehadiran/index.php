@@ -199,7 +199,10 @@
 						</tr>
 					</thead>
 					<tbody>
-						<?php $no = 1; ?>
+						<?php $no = 1; 
+						if(@$kehadiran) :
+						?>
+						
 						<?php foreach ($kehadirans as $kehadiran) : ?>
 							<tr>
 								<td><?= $no; ?></td>
@@ -353,6 +356,11 @@
 							</div>
 						</div>
 						<?php endforeach; ?>
+						<?php else: ?>
+						<tr>
+							<td colspan="12" class="text-center">Tidak ada data</td>
+						</tr>
+						<?php endif; ?>
 					</tbody>
 				</table>
 			</div>
