@@ -59,6 +59,12 @@
                     <p>Tunjangan</p>
                 </a>
             </li>
+            <li class="nav-item">
+                <a href="<?= base_url('pegawai/lapkin') ?>" class="nav-link  <?php if($c_judul == "Lapkin") {echo 'active';} ?>">
+                    <i class="nav-icon fas fa-list"></i>
+                    <p>Laporan Kinerja</p>
+                </a>
+            </li>
 
 
             </ul>

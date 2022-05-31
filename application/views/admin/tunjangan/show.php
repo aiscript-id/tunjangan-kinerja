@@ -41,6 +41,7 @@
 							<th>Jumlah Tunjangan</th>
 							<th>Potongan</th>
 							<th>Total</th>
+							<th>Laporan Kinerja</th>
 							<th>Validasi</th>
 							<th>Tanggal Terima</th>
 						</tr>
@@ -56,6 +57,21 @@
 								<td><?= rupiah($tunjangan->tunjangan); ?></td>
 								<td><?= $tunjangan->total_potongan; ?> %</td>
 								<td><?= rupiah($tunjangan->total_tunjangan); ?></td>
+								<td>
+								<?php if ($tunjangan->validasi != 1) { ?>
+									<a href="<?= base_url('admin/lapkin/delete/'. $tunjangan->id); ?>" onclick="confirm('Yakin ingin menghapus data ini?')"  class="btn btn-sm btn-default">
+										<i class="fa fa-trash text-danger"></i>
+									</a>
+								<?php } ?>
+								<?php if ($tunjangan->file_lapkin == null) { ?>
+									<button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#modal-import-<?= $tunjangan->id ?>">
+										Import Laporan Kinerja
+									</button>
+								<?php } else { ?>
+									<a href="<?= base_url('admin/lapkin/show/' . $tunjangan->id); ?>" class="btn btn-sm btn-success" title="Tambah Laporan Kinerja">Lihat Laporan</a>
+								<?php }  ?>
+
+								</td>
 								<td class="text-center">
 								<?php if ($tunjangan->validasi == 1){?>
 										<div class="btn btn-sm btn-white btn-circle" title="Validasi"><i class="fa fa-check text-success"></i></div>
@@ -78,6 +94,34 @@
 									<?php endif; ?>
 								</td>
 							</tr>
+							
+							<div class="modal fade" tabindex="-1" role="dialog" aria-labelledby="modelTitleId" aria-hidden="true" id="modal-import-<?= $tunjangan->id; ?>">
+								<div class="modal-dialog" role="document">
+									<div class="modal-content">
+										<div class="modal-header">
+											<h4 class="modal-title">Import Laporan Kinerja</h4>
+											<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+												<span aria-hidden="true">&times;</span>
+											</button>
+										</div>
+										<div class="modal-body">
+											<form action="<?= base_url('import/ImportLaporanKinerja/import_excel/'.$tunjangan->id); ?>" method="post" enctype="multipart/form-data">
+												<div class="form-group">
+													<label for="">File Laporan Kinerja</label>
+													<input type="file" name="fileExcel" class="form-control" required>
+												</div>
+												<div class="form-group">
+													<label for="">Periode</label>
+													<input type="text" name="periode" class="form-control" value="<?= $tunjangan->periode; ?>" readonly>
+												</div>
+												<div class="form-group">
+													<button type="submit" class="btn btn-primary btn-sm"><i class="fa fa-upload"></i> Import</button>
+												</div>
+											</form>
+										</div>
+									</div>
+								</div>
+							</div>
 						<?php $no++; ?>
 						<?php endforeach; ?>
 						<?php else: ?>
