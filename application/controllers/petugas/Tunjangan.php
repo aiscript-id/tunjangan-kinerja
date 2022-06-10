@@ -133,4 +133,14 @@ class Tunjangan extends MY_Controller
             redirect('admin/tunjangan', 'refresh');
         }
     }
+
+    public function nilai($id)
+    {
+        // update penilaian
+        $tunjangan = $this->db->get_where('tunjangan', ['id' => $id])->row();
+        $this->db->where('id', $id)->update('tunjangan', ['penilaian' => $this->input->post('penilaian')]);
+        $this->session->set_flashdata('success', 'Berhasil mengubah nilai');
+        redirect('petugas/tunjangan/show/'.$tunjangan->periode, 'refresh');
+
+    }
 }

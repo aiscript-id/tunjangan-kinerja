@@ -42,6 +42,7 @@
 							<th>Potongan</th>
 							<th>Total</th>
 							<th>Laporan Kinerja</th>
+							<th>Penilaian</th>
 							<th>Validasi</th>
 							<th>Tanggal Terima</th>
 						</tr>
@@ -57,7 +58,7 @@
 								<td><?= rupiah($tunjangan->tunjangan); ?></td>
 								<td><?= $tunjangan->total_potongan; ?> %</td>
 								<td><?= rupiah($tunjangan->total_tunjangan); ?></td>
-								<td>
+								<td >
 								<?php if ($tunjangan->validasi != 1) { ?>
 									<a href="<?= base_url('admin/lapkin/delete/'. $tunjangan->id); ?>" onclick="confirm('Yakin ingin menghapus data ini?')"  class="btn btn-sm btn-default">
 										<i class="fa fa-trash text-danger"></i>
@@ -71,6 +72,15 @@
 									<a href="<?= base_url('admin/lapkin/show/' . $tunjangan->id); ?>" class="btn btn-sm btn-success" title="Tambah Laporan Kinerja">Lihat Laporan</a>
 								<?php }  ?>
 
+								</td>
+								<td class="text-center">
+									<?php if (!@$tunjangan->penilaian) { ?>
+										<button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#modal-nilai-<?= $tunjangan->id ?>">
+											Beri Nilai
+										</button>
+									<?php } else { ?>
+										<?= $tunjangan->penilaian ?? 0 ?>
+									<?php }  ?>
 								</td>
 								<td class="text-center">
 								<?php if ($tunjangan->validasi == 1){?>
@@ -116,6 +126,31 @@
 												</div>
 												<div class="form-group">
 													<button type="submit" class="btn btn-primary btn-sm"><i class="fa fa-upload"></i> Import</button>
+												</div>
+											</form>
+										</div>
+									</div>
+								</div>
+							</div>
+
+							<div class="modal fade" tabindex="-1" role="dialog" aria-labelledby="modelTitleId" aria-hidden="true" id="modal-nilai-<?= $tunjangan->id; ?>">
+								<div class="modal-dialog" role="document">
+									<div class="modal-content">
+										<div class="modal-header">
+											<h4 class="modal-title">Penilaian Laporan Kinerja</h4>
+											<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+												<span aria-hidden="true">&times;</span>
+											</button>
+										</div>
+										<div class="modal-body">
+											<form action="<?php if($this->session->userdata('id_role') == 1): ?><?= base_url('admin/tunjangan/nilai/'.$tunjangan->id); ?><?php else: ?><?=base_url('petugas/tunjangan/nilai/').$tunjangan->id ?><?php endif; ?>" method="post" enctype="multipart/form-data">
+												<div class="form-group">
+													<label for="">Penilaian Kinerja</label>
+													<!-- number -->
+													<input type="number" name="penilaian" class="form-control" max="100" min="0" value="<?= $tunjangan->penilaian; ?>" required>
+												</div>
+												<div class="form-group">
+													<button type="submit" class="btn btn-primary btn-sm"> Simpan</button>
 												</div>
 											</form>
 										</div>
