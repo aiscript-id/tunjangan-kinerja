@@ -143,4 +143,51 @@ class Tunjangan extends MY_Controller
         redirect('admin/tunjangan/show/'.$tunjangan->periode, 'refresh');
 
     }
+
+    public function rekap($periode)
+    {
+        // excel print
+        $this->load->library('excel');
+        $this->excel->setActiveSheetIndex(0);
+        $this->excel->getActiveSheet()->setTitle('Rekap Tunjangan');
+
+        $this->excel->getActiveSheet()->setCellValue('A1', 'No');
+        $this->excel->getActiveSheet()->setCellValue('B1', 'Nama');
+        $this->excel->getActiveSheet()->setCellValue('C1', 'NIP');
+        $this->excel->getActiveSheet()->setCellValue('D1', 'Jabatan');
+        $this->excel->getActiveSheet()->setCellValue('E1', 'Golongan');
+        $this->excel->getActiveSheet()->setCellValue('F1', 'Tunjangan');
+        $this->excel->getActiveSheet()->setCellValue('G1', 'Potongan');
+        $this->excel->getActiveSheet()->setCellValue('H1', 'Total');
+
+        $tunjangan = $this->db->where('periode' , $periode)
+        ->join('tbl_user', 'tbl_user.id = tunjangan.user_id')
+        ->join('jabatan', 'jabatan.id = tbl_user.jabatan_id')
+        ->select('tunjangan.*, tbl_user.first_name, tbl_user.last_name, tbl_user.username, jabatan.jabatan as jabatan, jabatan.kelas')
+        ->get('tunjangan')->result();
+
+        $i = 2;
+
+        foreach ($tunjangan as $value) {
+            
+            $this->excel->getActiveSheet()->setCellValue('A'.$i, $i-1);
+            $this->excel->getActiveSheet()->setCellValue('B'.$i, $value->first_name . ' ' . $value->last_name);
+            $this->excel->getActiveSheet()->setCellValue('C'.$i, $value->username);
+            $this->excel->getActiveSheet()->setCellValue('D'.$i, $value->jabatan);
+            $this->excel->getActiveSheet()->setCellValue('E'.$i, $value->kelas);
+            $this->excel->getActiveSheet()->setCellValue('F'.$i, $value->tunjangan);
+            $this->excel->getActiveSheet()->setCellValue('G'.$i, $value->total_potongan);
+            $this->excel->getActiveSheet()->setCellValue('H'.$i, $value->total_tunjangan);
+            $i++;
+        }
+
+        $filename = 'Rekap Tunjangan '.$periode.'.xls';
+        header('Content-Type: application/vnd.ms-excel');
+        header('Content-Disposition: attachment;filename="'.$filename.'"');
+        header('Cache-Control: max-age=0');
+        $objWriter = PHPExcel_IOFactory::createWriter($this->excel, 'Excel5');
+        $objWriter->save('php://output');
+
+
+    }
 }

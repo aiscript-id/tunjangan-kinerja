@@ -22,9 +22,7 @@
                     <?= $this->db->count_all_results('jabatan'); ?>
                 </span>
             </div>
-
         </div>
-
     </div>
 
 
