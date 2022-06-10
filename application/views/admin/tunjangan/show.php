@@ -40,6 +40,7 @@
 							<th>NIP</th>
 							<th>Jumlah Tunjangan</th>
 							<th>Potongan</th>
+							<th>Tunjangan (%)</th>
 							<th>Total</th>
 							<th>Laporan Kinerja</th>
 							<th>Penilaian</th>
@@ -57,6 +58,7 @@
 								<td><?= $tunjangan->username ?></td>
 								<td><?= rupiah($tunjangan->tunjangan); ?></td>
 								<td><?= $tunjangan->total_potongan; ?> %</td>
+								<td><?= 100 - $tunjangan->total_potongan ?> %</td>
 								<td><?= rupiah($tunjangan->total_tunjangan); ?></td>
 								<td >
 								<?php if ($tunjangan->validasi != 1) { ?>
