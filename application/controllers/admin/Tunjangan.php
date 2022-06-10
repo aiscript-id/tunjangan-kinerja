@@ -1,6 +1,9 @@
 <?php
 defined('BASEPATH') or exit('No direct script access allowed');
 
+// // USE spreadsheet
+use PhpOffice\PhpSpreadsheet\Spreadsheet;
+use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 
 class Tunjangan extends MY_Controller
 {
@@ -144,21 +147,77 @@ class Tunjangan extends MY_Controller
 
     }
 
-    public function rekap($periode)
-    {
-        // excel print
-        $this->load->library('excel');
-        $this->excel->setActiveSheetIndex(0);
-        $this->excel->getActiveSheet()->setTitle('Rekap Tunjangan');
+    // public function rekap($periode)
+    // {
+    //     // phpspreadsheet print
 
-        $this->excel->getActiveSheet()->setCellValue('A1', 'No');
-        $this->excel->getActiveSheet()->setCellValue('B1', 'Nama');
-        $this->excel->getActiveSheet()->setCellValue('C1', 'NIP');
-        $this->excel->getActiveSheet()->setCellValue('D1', 'Jabatan');
-        $this->excel->getActiveSheet()->setCellValue('E1', 'Golongan');
-        $this->excel->getActiveSheet()->setCellValue('F1', 'Tunjangan');
-        $this->excel->getActiveSheet()->setCellValue('G1', 'Potongan');
-        $this->excel->getActiveSheet()->setCellValue('H1', 'Total');
+    //     $this->load->library('phpspreadsheet');
+    //     $this->excel->setActiveSheetIndex(0);
+    //     $this->excel->getActiveSheet()->setTitle('Rekap Tunjangan');
+
+    //     $this->excel->getActiveSheet()->setCellValue('A1', 'No');
+    //     $this->excel->getActiveSheet()->setCellValue('B1', 'Nama');
+    //     $this->excel->getActiveSheet()->setCellValue('C1', 'NIP');
+    //     $this->excel->getActiveSheet()->setCellValue('D1', 'Jabatan');
+    //     $this->excel->getActiveSheet()->setCellValue('E1', 'Golongan');
+    //     $this->excel->getActiveSheet()->setCellValue('F1', 'Tunjangan');
+    //     $this->excel->getActiveSheet()->setCellValue('G1', 'Potongan');
+    //     $this->excel->getActiveSheet()->setCellValue('H1', 'Total');
+
+    //     $tunjangan = $this->db->where('periode' , $periode)
+    //     ->join('tbl_user', 'tbl_user.id = tunjangan.user_id')
+    //     ->join('jabatan', 'jabatan.id = tbl_user.jabatan_id')
+    //     ->select('tunjangan.*, tbl_user.first_name, tbl_user.last_name, tbl_user.username, jabatan.jabatan as jabatan, jabatan.kelas')
+    //     ->get('tunjangan')->result();
+
+    //     $i = 2;
+
+    //     foreach ($tunjangan as $value) {
+            
+    //         $this->excel->getActiveSheet()->setCellValue('A'.$i, $i-1);
+    //         $this->excel->getActiveSheet()->setCellValue('B'.$i, $value->first_name . ' ' . $value->last_name);
+    //         $this->excel->getActiveSheet()->setCellValue('C'.$i, $value->username);
+    //         $this->excel->getActiveSheet()->setCellValue('D'.$i, $value->jabatan);
+    //         $this->excel->getActiveSheet()->setCellValue('E'.$i, $value->kelas);
+    //         $this->excel->getActiveSheet()->setCellValue('F'.$i, $value->tunjangan);
+    //         $this->excel->getActiveSheet()->setCellValue('G'.$i, $value->total_potongan);
+    //         $this->excel->getActiveSheet()->setCellValue('H'.$i, $value->total_tunjangan);
+    //         $i++;
+    //     }
+
+    //     $filename = 'Rekap Tunjangan '.$periode.'.xls';
+    //     header('Content-Type: application/vnd.ms-excel');
+    //     header('Content-Disposition: attachment;filename="'.$filename.'"');
+    //     header('Cache-Control: max-age=0');
+    //     $writer = \PhpOffice\PhpSpreadsheet\IOFactory::createWriter($this->excel, 'Xls');
+    //     $writer->save('php://output');
+
+
+    // }
+
+    public function rekap_excel($periode){
+        // php spreadsheet
+        
+
+        $spreadsheet = new Spreadsheet();
+
+        $spreadsheet->getProperties()->setCreator('Admin')
+        ->setLastModifiedBy('Admin')
+        ->setTitle('Rekap Tunjangan')
+        ->setSubject('Rekap Tunjangan')
+        ->setDescription('Rekap Tunjangan')
+        ->setKeywords('Rekap Tunjangan')
+        ->setCategory('Rekap Tunjangan');
+
+        $sheet = $spreadsheet->getActiveSheet();
+        $sheet->setCellValue('A1', 'No');
+        $sheet->setCellValue('B1', 'Nama');
+        $sheet->setCellValue('C1', 'NIP');
+        $sheet->setCellValue('D1', 'Jabatan');
+        $sheet->setCellValue('E1', 'Golongan');
+        $sheet->setCellValue('F1', 'Tunjangan');
+        $sheet->setCellValue('G1', 'Potongan');
+        $sheet->setCellValue('H1', 'Total');
 
         $tunjangan = $this->db->where('periode' , $periode)
         ->join('tbl_user', 'tbl_user.id = tunjangan.user_id')
@@ -170,24 +229,30 @@ class Tunjangan extends MY_Controller
 
         foreach ($tunjangan as $value) {
             
-            $this->excel->getActiveSheet()->setCellValue('A'.$i, $i-1);
-            $this->excel->getActiveSheet()->setCellValue('B'.$i, $value->first_name . ' ' . $value->last_name);
-            $this->excel->getActiveSheet()->setCellValue('C'.$i, $value->username);
-            $this->excel->getActiveSheet()->setCellValue('D'.$i, $value->jabatan);
-            $this->excel->getActiveSheet()->setCellValue('E'.$i, $value->kelas);
-            $this->excel->getActiveSheet()->setCellValue('F'.$i, $value->tunjangan);
-            $this->excel->getActiveSheet()->setCellValue('G'.$i, $value->total_potongan);
-            $this->excel->getActiveSheet()->setCellValue('H'.$i, $value->total_tunjangan);
+            $sheet->setCellValue('A'.$i, $i-1);
+            $sheet->setCellValue('B'.$i, $value->first_name . ' ' . $value->last_name);
+            $sheet->setCellValue('C'.$i, $value->username);
+            $sheet->setCellValue('D'.$i, $value->jabatan);
+            $sheet->setCellValue('E'.$i, $value->kelas);
+            $sheet->setCellValue('F'.$i, $value->tunjangan);
+            $sheet->setCellValue('G'.$i, $value->total_potongan);
+            $sheet->setCellValue('H'.$i, $value->total_tunjangan);
             $i++;
         }
 
-        $filename = 'Rekap Tunjangan '.$periode.'.xls';
+        $writer = new Xlsx($spreadsheet);
+        $filename = 'Rekap Tunjangan '.$periode.'.xlsx';
         header('Content-Type: application/vnd.ms-excel');
         header('Content-Disposition: attachment;filename="'.$filename.'"');
         header('Cache-Control: max-age=0');
-        $objWriter = PHPExcel_IOFactory::createWriter($this->excel, 'Excel5');
-        $objWriter->save('php://output');
 
-
+        $writer->save('php://output');
     }
+
+        
+
+        
+    
+    
+
 }

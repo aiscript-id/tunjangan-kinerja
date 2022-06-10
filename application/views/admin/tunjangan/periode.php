@@ -83,14 +83,14 @@ $(function() {
 									<!-- rekap bulanan -->
 									<a href="
 										<?php if($this->session->userdata('id_role') == 1): ?>
-											<?= base_url('admin/tunjangan/rekap/'.$per->tanggal) ?>
+											<?= base_url('admin/tunjangan/rekap_excel/'.$per->tanggal) ?>
 										<?php else: ?>
-											<?= base_url('petugas/tunjangan/rekap/'.$per->tanggal) ?>
+											<?= base_url('petugas/tunjangan/rekap_excel/'.$per->tanggal) ?>
 										<?php endif; ?>
 									" class="btn btn-success btn-sm">
 										<i class="fa fa-file-excel-o"></i> Rekap Bulanan
 									</a>
-									
+
 									<!-- verifikasi periode -->
 									<?php if ($per->verifikasi == 0 && $this->session->userdata('id_role') == 1): ?>
 										<a href="<?= base_url('admin/tunjangan/verifikasi/'.$per->tanggal) ?>" class="btn btn-success btn-sm">
