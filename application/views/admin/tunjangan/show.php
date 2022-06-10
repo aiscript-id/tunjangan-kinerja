@@ -78,11 +78,11 @@
 									</td>
 									<td class="text-center">
 										<?php if (!@$tunjangan->penilaian) { ?>
-											<button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#modal-nilai-<?= $tunjangan->id ?>">
-												Beri Nilai
-											</button>
+											<!-- link nilai -->
+											<a href="<?= base_url('admin/tunjangan/penilaian/'.$tunjangan->id) ?>" class="btn btn-sm btn-primary" title="Beri penilaian kinerja">Beri Nilai</a>
 										<?php } else { ?>
 											<?= $tunjangan->penilaian ?? 0 ?>
+											<a href="<?= base_url('admin/tunjangan/show_penilaian/'.$tunjangan->id) ?>" class="btn btn-sm btn-info" title="Lihat penilaian kinerja">Lihat Nilai</a>
 										<?php }  ?>
 									</td>
 									<td class="text-center">

@@ -249,6 +249,102 @@ class Tunjangan extends MY_Controller
         $writer->save('php://output');
     }
 
+
+    public function penilaian($id)
+    {
+        $tunjangan = $this->db->where('tunjangan.id' , $id)
+        ->join('tbl_user', 'tbl_user.id = tunjangan.user_id')
+        ->join('jabatan', 'jabatan.id = tbl_user.jabatan_id')
+        ->select('tunjangan.*, tbl_user.first_name, tbl_user.last_name, tbl_user.username, jabatan.jabatan as jabatan, jabatan.kelas')
+        ->get('tunjangan')->row();
+
+
+        
+        $data = konfigurasi('Tunjangan');
+
+        $data['periode'] = $this->db->where('tanggal', $tunjangan->periode)->get('periode_tunjangan')->row();
+        $data['tunjangan'] = $tunjangan;
+        
+        // get periode and count validasi
+
+        $this->template->load('layouts/template', 'admin/tunjangan/penilaian', $data);
+
+        // $this->load->view('admin/layout/wrapper', $data, FALSE);
+
+    }
+
+    public function submit_penilaian($id)
+    {
+        $tunjangan = $this->db->where('tunjangan.id' , $id)->get('tunjangan')->row();
+        // check if penilaian exist
+        $penilaian = $this->db->where('tunjangan_id' , $id)->get('penilaian')->row();
+
+        if ($penilaian) {
+            $this->session->set_flashdata('error', 'Data Penilaian Sudah Ada');
+            redirect('admin/tunjangan/show/'.$tunjangan->periode);
+        } else {
+            $data = [
+                'tunjangan_id' => $tunjangan->id,
+                'kualitas_a' => $this->input->post('kualitas_a'),
+                'kualitas_b' => $this->input->post('kualitas_b'),
+                'kualitas_c' => $this->input->post('kualitas_c'),
+                'kualitas_d' => $this->input->post('kualitas_d'),
+                'ketepatan_a' => $this->input->post('ketepatan_a'),
+                'ketepatan_b' => $this->input->post('ketepatan_b'),
+                'kuantitas_a' => $this->input->post('kuantitas_a'),
+                'kuantitas_b' => $this->input->post('kuantitas_b'),
+
+                'pelayanan' => $this->input->post('pelayanan'),
+                'integritas' => $this->input->post('integritas'),
+                'komitmen' => $this->input->post('komitmen'),
+                'disiplin' => $this->input->post('disiplin'),
+                'kerjasama' => $this->input->post('kerjasama'),
+
+                'tanggal_penilaian' => date('Y-m-d'),
+
+            ];
+    
+            $this->db->insert('penilaian', $data);
+
+            $kualitas = ($this->input->post('kualitas_a') + $this->input->post('kualitas_b') + $this->input->post('kualitas_c') + $this->input->post('kualitas_d')) / 4;
+
+            $ketepatan = ($this->input->post('ketepatan_a') + $this->input->post('ketepatan_b')) / 2;
+            $kuantitas = ($this->input->post('kuantitas_a') + $this->input->post('kuantitas_b')) / 2;
+            $hasil_kerja = ($kualitas * 0.5) + ($ketepatan * 0.3) + ($kuantitas * 0.2);
+
+
+            $perilaku = ($this->input->post('pelayanan') * 0.2) + ($this->input->post('integritas') * 0.2) + ($this->input->post('komitmen') * 0.2) + ($this->input->post('disiplin') * 0.2) + ($this->input->post('kerjasama') * 0.2);
+
+            $nilai = ($hasil_kerja * 0.7) + ($perilaku * 0.3);
+
+            // update penilaian at tunjangan
+            $this->db->where('id' , $id)->update('tunjangan', ['penilaian' => $nilai]);
+            $this->session->set_flashdata('success', 'Data Penilaian Berhasil Ditambahkan');
+            redirect('admin/tunjangan/show/'.$tunjangan->periode);
+        }
+        
+    }
+
+    public function show_penilaian($id)
+    {
+        $tunjangan = $this->db->where('tunjangan.id' , $id)
+        ->join('tbl_user', 'tbl_user.id = tunjangan.user_id')
+        ->join('jabatan', 'jabatan.id = tbl_user.jabatan_id')
+        ->select('tunjangan.*, tbl_user.first_name, tbl_user.last_name, tbl_user.username, jabatan.jabatan as jabatan, jabatan.kelas')
+        ->get('tunjangan')->row();
+
+        $penilaian = $this->db->where('tunjangan_id' , $id)->get('penilaian')->row();
+        
+        $data = konfigurasi('Tunjangan');
+
+        $data['periode'] = $this->db->where('tanggal', $tunjangan->periode)->get('periode_tunjangan')->row();
+        $data['tunjangan'] = $tunjangan;
+        $data['penilaian'] = $penilaian;
+        
+        // get periode and count validasi
+
+        $this->template->load('layouts/template', 'admin/tunjangan/show-penilaian', $data);
+    }
         
 
         
