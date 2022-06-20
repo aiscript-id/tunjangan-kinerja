@@ -88,7 +88,7 @@
 					<select name="status_kepegawaian" id="status_kepegawaian" class="form-control" required>
 						<option value="">Pilih Status Kepegawaian</option>
 						<option  <?php if(@$pegawai->status_kepegawaian == 1) {echo 'selected';} ?> value="1">PNS</option>
-						<option  <?php if(@$pegawai->status_kepegawaian == 2) {echo 'selected';} ?> value="2">Non-PNS</option>
+						<!-- <option  <?php if(@$pegawai->status_kepegawaian == 2) {echo 'selected';} ?> value="2">Non-PNS</option> -->
 					</select>
 					<?= form_error('status_kepegawaian', '<small class="text-danger">', '</small>') ?>
 				</div>

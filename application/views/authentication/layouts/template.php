@@ -14,9 +14,22 @@
 	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
 	<!-- jQuery 2.2.3 -->
 	<script src="<?php echo base_url('assets');?>/vendor/jquery/jquery.min.js"></script>
+	<!-- backgroun image -->
+<style>
+	.bg-login {
+		background-image: url("<?= base_url('assets/images/bg-login.jpg'); ?>");
+		background-size: cover;
+		background-position: center;
+		background-repeat: no-repeat;
+		height: 100vh;
+		/* bg blur image */
+		
+		
+	}
+</style>
 </head>
 
-<body class="hold-transition login-page">
+<body class="hold-transition login-page bg-login">
 	<!-- <div class="wrapper"> -->
 		<?php echo $contents ;?>
 	<!-- </div> -->
