@@ -8,7 +8,8 @@ class Kehadiran extends MY_Controller
     {
         parent::__construct();
         $this->check_login();
-        if ($this->session->userdata('id_role') != "4") {
+
+        if ($this->session->userdata('id_role') == "1") {
             redirect('', 'refresh');
         }
     }

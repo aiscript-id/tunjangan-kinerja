@@ -66,15 +66,15 @@
                 </a>
             </li>
 
-            <li class="nav-header">Manage</li>
+            <li class="nav-header">Data Laporan</li>
             <li class="nav-item">
-                <a href="<?= base_url('petugas/kehadiran') ?>" class="nav-link  <?php if($c_judul == "Manage Kehadiran") {echo 'active';} ?>">
+                <a href="<?= base_url('kepala/kehadiran') ?>" class="nav-link  <?php if($c_judul == "Laporan Kehadiran") {echo 'active';} ?>">
                     <i class="nav-icon far fa-calendar-check"></i>
                     <p>Kehadiran</p>
                 </a>
             </li>
             <li class="nav-item">
-                <a href="<?= base_url('petugas/tunjangan') ?>" class="nav-link  <?php if($c_judul == "Manage Tunjangan") {echo 'active';} ?>">
+                <a href="<?= base_url('kepala/tunjangan') ?>" class="nav-link  <?php if($c_judul == "Laporan Tunjangan") {echo 'active';} ?>">
                     <i class="nav-icon fas fa-coins"></i>
                     <p>Tunjangan</p>
                 </a>

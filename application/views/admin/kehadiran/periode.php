@@ -157,6 +157,12 @@ $(function() {
 									</a>
 									<?php endif; ?>
 
+									<?php if($this->session->userdata('id_role') == 2): ?>
+									<a href="<?= base_url('kepala/kehadiran/kehadiran/'.$per->tanggal) ?>" class="btn btn-primary btn-sm">
+										<i class="fa fa-list"></i> Kehadiran
+									</a>
+									<?php endif; ?>
+
 								</td>
 							</tr>
 	

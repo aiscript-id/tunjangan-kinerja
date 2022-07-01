@@ -8,14 +8,14 @@ class Tunjangan extends MY_Controller
     {
         parent::__construct();
         $this->check_login();
-        if ($this->session->userdata('id_role') != "3") {
+        if ($this->session->userdata('id_role') != "2") {
             redirect('', 'refresh');
         }
     }
 
     public function index()
     {
-        $data = konfigurasi('Manage Tunjangan');
+        $data = konfigurasi('Laporan Tunjangan');
 
         $data['periode'] = $this->db->get('periode_tunjangan')->result();
         // get periode and count validasi
@@ -26,7 +26,7 @@ class Tunjangan extends MY_Controller
 
     public function show($periode)
     {
-        $data = konfigurasi('Manage Tunjangan');
+        $data = konfigurasi('Laporan Tunjangan');
         $data['periode'] = $this->db->get_where('periode_tunjangan', ['tanggal' => $periode])->row();
         $data['tunjangans'] = $this->db->where('periode', $periode)
         ->select('tunjangan.*, first_name, last_name, username')
@@ -142,5 +142,18 @@ class Tunjangan extends MY_Controller
         $this->session->set_flashdata('success', 'Berhasil mengubah nilai');
         redirect('petugas/tunjangan/show/'.$tunjangan->periode, 'refresh');
 
+    }
+
+    public function ttd($tanggal)
+    {
+        $periode = $this->db->get_where('periode_tunjangan', ['tanggal' => $tanggal])->row();
+        if ($periode->ttd != null) {
+            $this->session->set_flashdata('error', 'Gagal mengkonfirmasi Tunjangan. Periode telah dikonfirmasi');
+            redirect('kepala/tunjangan', 'refresh');
+        } else {
+            $this->db->where('tanggal', $tanggal)->update('periode_tunjangan', ['ttd' => date('Y-m-d')]);
+            $this->session->set_flashdata('success', 'Berhasil memvalidasi dan menandatantangani Laporan Tunjangan');
+            redirect('kepala/tunjangan', 'refresh');
+        }
     }
 }

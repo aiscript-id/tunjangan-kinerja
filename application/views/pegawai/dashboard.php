@@ -53,12 +53,14 @@
                             <dt class="col-sm-3">Tunjangan</dt>
                             <dd class="col-sm-9"><?= rupiah($tunjangan->total_tunjangan) ?></dd>
                         </dl>
-                        <?php if ($tunjangan->verifikasi != null && $tunjangan->tanggal_terima == null): ?>
+                        <?php if ($tunjangan->verifikasi != null && $tunjangan->tanggal_terima == null && $tunjangan->ttd != null): ?>
                             <!-- btn terima -->
                             <hr>
                             <small>Apakah anda telah menerima tunjangan ?</small>
                             <a href="<?= base_url('pegawai/tunjangan/terima/' . $tunjangan->id) ?>" class="btn btn-success btn-sm btn-block"
                             onclick="return confirm('Apakah anda yakin ingin mengkonfirmasi penerimaan tunjangan ini?')">Ya, Tunjangan telah diterima</a>
+                        <?php elseif($tunjangan->ttd == null): ?>
+                            <small>Tunjangan Sedang Di validasi oleh Kepala Balai</small>
                         <?php endif; ?>
                     <?php else : ?>
                         <p class="text-sm text-center m-4"><i>Tunjangan sedang divalidasi. Perhitungan total tunjangan berdasarkan pada data kehadiran.</i></p>

@@ -43,6 +43,7 @@ $(function() {
 								<th>Tervalidasi</th>
 								<th>Total Tunjangan</th>
 								<th class="text-center">Verifikasi</th>
+								<th class="text-center">Validasi Kepala Dinas</th>
 								<th>Aksi</th>
 							</tr>
 						</thead>
@@ -60,7 +61,7 @@ $(function() {
 									<?php
 										$total = $this->db->query("SELECT SUM(total_tunjangan) AS total FROM tunjangan WHERE periode = '$per->tanggal'")->row();
 										echo "Rp. ".number_format($total->total, 0, ',', '.');
-									?>
+										?>
 								</td>
 								<td class="text-center">
 									<?php if ($per->verifikasi == null or $per->verifikasi == '0000-00-00'): ?>
@@ -69,25 +70,35 @@ $(function() {
 											<p class="mb-0"> <?= tgl_indo($per->verifikasi) ?></p>
 									<?php endif ?>
 								</td>
+								<td class="text-center">
+									<?php if ($per->ttd == null or $per->ttd == '0000-00-00'): ?>
+										<span class="badge badge-danger">Belum</span>
+										<!-- verifikasi periode -->
+										<?php if ($this->session->userdata('id_role') == 2): ?>
+											<br>
+											<a href="<?= base_url('kepala/tunjangan/ttd/'.$per->tanggal) ?>" class="mt-2 btn btn-outline-success btn-sm">
+												<i class="fa fa-check"></i> Validasi Kepala Dinas
+											</a>
+										<?php endif ?>
+										<?php else: ?>
+											<p class="mb-0"> <?= tgl_indo($per->ttd) ?></p>
+									<?php endif ?>
+								</td>
 								<td>
 									<!-- input kehadiran -->
 									<a href="
 										<?php if($this->session->userdata('id_role') == 1): ?>
 											<?= base_url('admin/tunjangan/show/'.$per->tanggal) ?>
-										<?php else: ?>
+										<?php elseif($this->session->userdata('id_role') == 3): ?>
 											<?= base_url('petugas/tunjangan/show/'.$per->tanggal) ?>
+										<?php elseif($this->session->userdata('id_role') == 2): ?>
+											<?= base_url('kepala/tunjangan/show/'.$per->tanggal) ?>
 										<?php endif; ?>
 									" class="btn btn-primary btn-sm">
 										<i class="fa fa-list"></i> Detail Tunjangan
 									</a>
 									<!-- rekap bulanan -->
-									<a href="
-										<?php if($this->session->userdata('id_role') == 1): ?>
-											<?= base_url('admin/tunjangan/rekap_excel/'.$per->tanggal) ?>
-										<?php else: ?>
-											<?= base_url('petugas/tunjangan/rekap_excel/'.$per->tanggal) ?>
-										<?php endif; ?>
-									" class="btn btn-success btn-sm">
+									<a href="<?= base_url('export/rekap_excel/'.$per->tanggal) ?>" class="btn btn-success btn-sm">
 										<i class="fa fa-file-excel-o"></i> Rekap Bulanan
 									</a>
 
@@ -97,6 +108,8 @@ $(function() {
 											<i class="fa fa-check"></i> Verifikasi
 										</a>
 									<?php endif ?>
+
+									
 
 								</td>
 							</tr>

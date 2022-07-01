@@ -226,7 +226,7 @@ class Auth extends MY_Controller
             redirect('admin/home');
         }
         if ($this->session->userdata('id_role') == "2") {
-            redirect('member/home');
+            redirect('kepala/home');
         }
         if ($this->session->userdata('id_role') == "3") {
             redirect('petugas/home');
@@ -251,7 +251,7 @@ class Auth extends MY_Controller
                 if ($data->id_role == '1') {
                     redirect('admin/home');
                 } elseif ($data->id_role == '2') {
-                    redirect('member/home');
+                    redirect('kepala/home');
                 } elseif ($data->id_role == '3') {
                     redirect('petugas/home');
                 } elseif ($data->id_role == '4') {

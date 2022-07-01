@@ -28,7 +28,7 @@
 		if ($this->session->userdata('id_role') == '1') {
 			require_once('_sidebar.php') ;
 		} elseif ($this->session->userdata('id_role') == '2') {
-			require_once('_sidebar_petugas.php') ;
+			require_once('_sidebar_kepala.php') ;
 		} elseif ($this->session->userdata('id_role') == '3') {
 			require_once('_sidebar_petugas.php') ;
 		} elseif ($this->session->userdata('id_role') == '4') {

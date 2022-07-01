@@ -8,14 +8,14 @@ class Kehadiran extends MY_Controller
     {
         parent::__construct();
         $this->check_login();
-        if ($this->session->userdata('id_role') != "3") {
+        if ($this->session->userdata('id_role') != "2") {
             redirect('', 'refresh');
         }
     }
 
     public function index()
     {
-        $data = konfigurasi('Manage Kehadiran');
+        $data = konfigurasi('Laporan Kehadiran');
         $data['periode'] = $this->db->get('periode_tunjangan')->result();
         $this->template->load('layouts/template', 'admin/kehadiran/periode', $data);
         // $this->template->load('layouts/new','admin/dashboard', $data);
@@ -26,7 +26,7 @@ class Kehadiran extends MY_Controller
 
     public function kehadiran($periode)
     {
-        $data = konfigurasi('Manage Kehadiran');
+        $data = konfigurasi('Laporan Kehadiran');
         $data['periode'] = $this->db->get_where('periode_tunjangan', ['tanggal' => $periode])->row();
         if ($data['periode'] == null) {
             $this->session->set_flashdata('error', 'Periode tidak ditemukan');
