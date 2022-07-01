@@ -71,7 +71,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 | The $query_builder variables lets you determine whether or not to load
 | the query builder class.
  */
-$active_group  = 'default';
+$active_group  = 'production';
 $query_builder = true;
 
 $db['default'] = [
@@ -84,6 +84,28 @@ $db['default'] = [
     'dbprefix'     => '',
     'pconnect'     => false,
     'db_debug'     => (ENVIRONMENT !== 'production'),
+    'cache_on'     => false,
+    'cachedir'     => '',
+    'char_set'     => 'utf8',
+    'dbcollat'     => 'utf8_general_ci',
+    'swap_pre'     => '',
+    'encrypt'      => false,
+    'compress'     => false,
+    'stricton'     => false,
+    'failover'     => [],
+    'save_queries' => true,
+];
+
+$db['production'] = [
+    'dsn'          => '',
+    'hostname'     => 'vaporeon.rapidplex.com',
+    'username'     => 'codeinem_tunjangan-kinerja',
+    'password'     => '@[7J$bvX@6C,',
+    'database'     => 'codeinem_tunjangan-kinerja',
+    'dbdriver'     => 'mysqli',
+    'dbprefix'     => '',
+    'pconnect'     => false,
+    'db_debug'     => false,
     'cache_on'     => false,
     'cachedir'     => '',
     'char_set'     => 'utf8',
