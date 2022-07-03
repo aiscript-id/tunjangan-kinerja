@@ -164,7 +164,7 @@
 							<?php endforeach; ?>
 							<?php else: ?>
 								<tr>
-									<td colspan="8" class="text-center">Tidak ada data. <br> Silahkan klik tombol <b>Cek Kehadiran</b> untuk mendapatkan data perhitungan tunjangan. <br> Pastikan data kehadiran pada periode yang sama telah diverifikasi</td>
+									<td colspan="11" class="text-center">Tidak ada data. <br> Silahkan klik tombol <b>Cek Kehadiran</b> untuk mendapatkan data perhitungan tunjangan. <br> Pastikan data kehadiran pada periode yang sama telah diverifikasi</td>
 								</tr>
 							<?php endif ?>
 	
