@@ -53,7 +53,7 @@
                             <dt class="col-sm-3">Tunjangan</dt>
                             <dd class="col-sm-9"><?= rupiah($tunjangan->total_tunjangan) ?></dd>
                         </dl>
-                        <?php if($tunjangan->ttd == null): ?>
+                        <?php if(!@$tunjangan->ttd): ?>
                             <small>Tunjangan Sedang Di validasi oleh Kepala Balai</small>
                         <?php else: ?>
                             <?php if ($tunjangan->verifikasi != null && $tunjangan->tanggal_terima == null): ?>
