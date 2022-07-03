@@ -78,6 +78,7 @@ $(function() {
 											<br>
 											<a href="<?= base_url('kepala/tunjangan/ttd/'.$per->tanggal) ?>" class="mt-2 btn btn-outline-success btn-sm">
 												<i class="fa fa-check"></i> Validasi Kepala Balai
+												
 											</a>
 										<?php endif ?>
 										<?php else: ?>
