@@ -27,8 +27,8 @@ $(function() {
 					<?php 
 						// create 12 mont-year
 						$date = array();
-						for ($i=12; $i >= 0; $i--) {
-							$date[$i] = date('m-Y', strtotime('-'.$i.' month'));
+						for ($i=0; $i < 12; $i++) { 
+							$date[$i] = date('Y-m', strtotime('-'.$i.' month'));
 						}
 						for ($i=0; $i <= 12; $i++) {
 							$date[$i] = date('m-Y', strtotime('+'.$i.' month'));
