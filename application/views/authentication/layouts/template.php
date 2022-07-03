@@ -17,7 +17,7 @@
 	<!-- backgroun image -->
 <style>
 	.bg-login {
-		background-image: url("<?= base_url('assets/images/bg-login.jpg'); ?>");
+		background-image: url("<?= base_url('assets/images/bg-login-copy.jpg'); ?>");
 		background-size: cover;
 		background-position: center;
 		background-repeat: no-repeat;
