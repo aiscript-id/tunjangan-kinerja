@@ -26,9 +26,10 @@ $(function() {
 					<!-- Button trigger modal -->
 					<?php 
 						// create 12 mont-year
+						$dateb = array();
 						$date = array();
 						for ($i=0; $i < 12; $i++) { 
-							$date[$i] = date('Y-m', strtotime('-'.$i.' month'));
+							$dateb[$i] = date('Y-m', strtotime('-'.$i.' month'));
 						}
 						for ($i=0; $i <= 12; $i++) {
 							$date[$i] = date('m-Y', strtotime('+'.$i.' month'));
@@ -56,6 +57,9 @@ $(function() {
 											<!-- select $date -->
 											<select name="tanggal" class="form-control" required>
 												<option value="">Pilih Periode</option>
+												<?php foreach ($dateb as $key => $value): ?>
+													<option value="<?= $value; ?>"><?= $value; ?></option>
+												<?php endforeach ?>
 												<?php foreach ($date as $key => $value): ?>
 													<option value="<?= $value; ?>"><?= $value; ?></option>
 												<?php endforeach ?>
