@@ -31,7 +31,7 @@ $(function() {
 						for ($i=12; $i > 0; $i--) { 
 							$dateb[$i] = date('m-Y', strtotime('-'.$i.' month'));
 						}
-						
+
 						for ($i=0; $i <= 12; $i++) {
 							$date[$i] = date('m-Y', strtotime('+'.$i.' month'));
 						}
@@ -80,7 +80,7 @@ $(function() {
 										<!-- awal -->
 										<div class="form-group">
 											<label for="">Awal</label>
-											<input type="text" name="awal" class="form-control" id="datepicker" placeholder="Awal" required>
+											<input type="date" name="awal" class="form-control" id="datepicker" placeholder="Awal" required>
 											<!-- alert -->
 											<?= form_error('awal', '<small class="text-danger">', '</small>') ?>
 										</div>
@@ -88,7 +88,7 @@ $(function() {
 										<!-- akhir -->
 										<div class="form-group">
 											<label for="">Akhir</label>
-											<input type="text" name="akhir" class="form-control" id="datepicker" placeholder="Akhir" required>
+											<input type="date" name="akhir" class="form-control" id="datepicker" placeholder="Akhir" required>
 											<!-- alert -->
 											<?= form_error('akhir', '<small class="text-danger">', '</small>') ?>
 										</div>
