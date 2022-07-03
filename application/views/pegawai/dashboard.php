@@ -53,7 +53,7 @@
                             <dt class="col-sm-3">Tunjangan</dt>
                             <dd class="col-sm-9"><?= rupiah($tunjangan->total_tunjangan) ?></dd>
                         </dl>
-                        <?php if ($tunjangan->verifikasi != null && $tunjangan->tanggal_terima == null && $tunjangan->ttd != null): ?>
+                        <?php if ($tunjangan->verifikasi != null && $tunjangan->tanggal_terima == null): ?>
                             <!-- btn terima -->
                             <hr>
                             <small>Apakah anda telah menerima tunjangan ?</small>
