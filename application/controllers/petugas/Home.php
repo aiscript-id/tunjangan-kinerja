@@ -46,7 +46,7 @@ class Home extends MY_Controller
 		$data = konfigurasi('Dashboard');
         $user = $this->user();
         $data['user'] = $user;
-        $data['tunjangan'] = $this->db->select('tunjangan.*,  periode_tunjangan.id as periode_id, verifikasi, awal, akhir, periode_tunjangan.periode as name_periode')
+        $data['tunjangan'] = $this->db->select('tunjangan.*,  periode_tunjangan.id as periode_id, verifikasi, awal, ttd, akhir, periode_tunjangan.periode as name_periode')
         ->where('user_id', $user->id )
         ->join('periode_tunjangan', 'periode_tunjangan.tanggal = tunjangan.periode')
         ->get('tunjangan')->last_row();
